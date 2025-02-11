@@ -1,2 +1,2 @@
 # LuaShip
-A Lua Container ORM Wrapper
+A Lua Container  Wrapper
