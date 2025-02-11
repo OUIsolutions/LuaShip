@@ -2,6 +2,15 @@
 ## [Download Link](https://github.com/OUIsolutions/LuaShip/releases/download/0.0.1/LuaShip.lua)
 LuaShip is a Lua library for managing containerized build environments. It provides a simple interface for creating and managing container images, executing commands, and handling file operations.
 
+### Building from Scratch
+if you want to build the project from the repo, just install [Darwin](https://github.com/OUIsolutions/Darwin) with:
+```bash
+curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.018/darwin.out -o darwin.out && sudo chmod +x darwin.out &&  sudo  mv darwin.out /usr/bin/darwin
+```
+and then you can build the **LuaShip.lua** with:
+```bash
+darwin run_blueprint
+```
 ## Core Features
 
 - Container image management with support for Docker and Podman
