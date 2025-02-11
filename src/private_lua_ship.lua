@@ -19,7 +19,7 @@ private_lua_ship.create_machine = function(start_image)
     end
 
     self_obj.build                = function(name)
-        private_lua_ship_machine_methods.build(self_obj, name)
+       return  private_lua_ship_machine_methods.build(self_obj, name)
     end
 
     return self_obj

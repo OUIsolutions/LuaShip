@@ -14,5 +14,32 @@ private_lua_ship_machine_methods.build = function(self_obj, name)
         private_lua_ship.error("unable to execute command:\n" .. command)
     end
     private_lua_ship.os_remove(filename)
+    return name
 end
-private_lua_ship_machine_methods.start(self_obj,)
+private_lua_ship_machine_methods.start  = function(self_obj,props)
+    if not props.rebuild then
+        props.rebuild = true 
+    end 
+    local name = props.name
+    if props.rebuild then
+        name = private_lua_ship_machine_methods.build(self_obj,props.name)
+    end
+    if not props.flags then
+        props.flags = {}
+    end
+    local command = self_obj.contanizer .. " run -d "
+    for i=1,#props.flags do
+        local current_flag = props.flags[i]
+        command = command .. "--"..current_flag[1].." "..current_flag[2].." " 
+    end
+    if not props.volume then
+        props.volume = {}
+    end
+    for i=1,#props.volume do
+        local current_volume = props.volume[i]
+        command = command .. "-v "..current_volume[1]..":"..current_volume[2].." "
+    end
+    command = command .. name
+    print(command)
+
+end 
