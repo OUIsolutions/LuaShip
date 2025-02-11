@@ -33,6 +33,8 @@ private_lua_ship_machine_methods.start  = function(self_obj,props)
         command = command .. "--"..current_flag[1]
         if current_flag[2] then
             command = command .. " "..current_flag[2].." "
+        else
+            command = command .. " "
         end
     end
     if not props.volumes then
@@ -40,7 +42,7 @@ private_lua_ship_machine_methods.start  = function(self_obj,props)
     end
     for i=1,#props.volumes do
         local current_volume = props.volumes[i]
-        command = command .. "-v "..current_volume[1]..":"..current_volume[2]..":z"
+        command = command .. "-v "..current_volume[1]..":"..current_volume[2]..":z "
     end
     command = command .. name
     print(command)
