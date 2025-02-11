@@ -15,3 +15,4 @@ private_lua_ship_machine_methods.build = function(self_obj, name)
     end
     private_lua_ship.os_remove(filename)
 end
+private_lua_ship_machine_methods.start(self_obj,)
