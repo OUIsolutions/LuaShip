@@ -1,7 +1,7 @@
 private_lua_ship.create_machine = function(start_image)
     local self_obj                = {}
     self_obj.contanizer           = "docker"
-    self_obj.docker_file          = "FROM: " .. start_image .. "\n"
+    self_obj.docker_file          = "FROM  " .. start_image .. "\n"
     self_obj.add_comptime_command = function(command)
         private_lua_ship_machine_methods.add_comptime_command(self_obj, command)
     end

@@ -8,6 +8,7 @@ if os then
         private_lua_ship.os_execute = os.execute
     end
     if os.remove then
-        private_lua_ship.os_execute = os.remove
+        private_lua_ship.os_remove = os.remove
     end
 end
+private_lua_ship.error = error
