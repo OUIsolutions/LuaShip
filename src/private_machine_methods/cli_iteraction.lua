@@ -8,7 +8,7 @@ private_lua_ship_machine_methods.build = function(self_obj, name)
     end
     local filename = name .. ".Dockerfile"
     private_lua_ship_machine_methods.save_to_file(self_obj, filename)
-    local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " .  --quiet "
+    local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " .  --quiet   "
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
