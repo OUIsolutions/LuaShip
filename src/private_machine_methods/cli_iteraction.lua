@@ -8,7 +8,7 @@ private_lua_ship_machine_methods.build = function(self_obj, name)
     end
     local filename = name .. ".Dockerfile"
     private_lua_ship_machine_methods.save_to_file(self_obj, filename)
-    local command = self_obj.contanizer .. " build -t " .. name .. " -f " .. filename .. " .  --quiet"
+    local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " .  --quiet"
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
@@ -27,17 +27,20 @@ private_lua_ship_machine_methods.start  = function(self_obj,props)
     if not props.flags then
         props.flags = {}
     end
-    local command = self_obj.contanizer .. " run -d "
+    local command = self_obj.provider .. " run -d "
     for i=1,#props.flags do
         local current_flag = props.flags[i]
-        command = command .. "--"..current_flag[1].."="..current_flag[2].." " 
+        command = command .. "--"..current_flag[1]
+        if current_flag[2] then
+            command = command .. " "..current_flag[2].." "
+        end
     end
     if not props.volumes then
         props.volumes = {}
     end
     for i=1,#props.volumes do
         local current_volume = props.volumes[i]
-        command = command .. "-v "..current_volume[1]..":"..current_volume[2].." "
+        command = command .. "-v "..current_volume[1]..":"..current_volume[2]..":z"
     end
     command = command .. name
     print(command)
