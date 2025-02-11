@@ -22,21 +22,19 @@ private_lua_ship_machine_methods.start  = function(self_obj,props)
     end 
     local name = props.name
     if props.rebuild then
+    
         name = private_lua_ship_machine_methods.build(self_obj,props.name)
     end
     if not props.flags then
         props.flags = {}
     end
-    local command = self_obj.provider .. " run -d "
+    local command = self_obj.provider .. " run "
     for i=1,#props.flags do
         local current_flag = props.flags[i]
-        command = command .. "--"..current_flag[1]
-        if current_flag[2] then
-            command = command .. " "..current_flag[2].." "
-        else
-            command = command .. " "
-        end
+        command = command .. current_flag.." "
+    
     end
+
     if not props.volumes then
         props.volumes = {}
     end
@@ -46,5 +44,8 @@ private_lua_ship_machine_methods.start  = function(self_obj,props)
     end
     command = command .. name
     print(command)
-
+    -- local ok = private_lua_ship.os_execute(command)
+    --if not ok then
+    --    private_lua_ship.error("unable to execute command:\n" .. command)
+    --end
 end 
