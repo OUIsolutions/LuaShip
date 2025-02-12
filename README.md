@@ -1,5 +1,5 @@
 # LuaShip Documentation
-## [Download Link](https://github.com/OUIsolutions/LuaShip/releases/download/0.0.2/LuaShip.lua)
+## [Download Link](https://github.com/OUIsolutions/LuaShip/releases/download/0.0.3/LuaShip.lua)
 LuaShip is a Lua library for managing containerized build environments. It provides a simple interface for creating and managing container images, executing commands, and handling file operations.
 
 ### Building from Scratch
