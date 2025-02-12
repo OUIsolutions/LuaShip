@@ -2,6 +2,14 @@
 ## [Download Link](https://github.com/OUIsolutions/LuaShip/releases/download/0.0.3/LuaShip.lua)
 LuaShip is a Lua library for managing containerized build environments. It provides a simple interface for creating and managing container images, executing commands, and handling file operations.
 
+## Core Features
+
+- Container image management with support for Docker and Podman
+- File copying between host and container
+- Environment variable configuration
+- Build-time command execution
+- Flexible container start options
+
 ### Building from Scratch
 if you want to build the project from the repo, just install [Darwin](https://github.com/OUIsolutions/Darwin) with:
 ```bash
@@ -11,15 +19,39 @@ and then you can build the **LuaShip.lua** with:
 ```bash
 darwin run_blueprint
 ```
-## Core Features
-
-- Container image management with support for Docker and Podman
-- File copying between host and container
-- Environment variable configuration
-- Build-time command execution
-- Flexible container start options
 
 ## API Reference
+
+## Example Usage
+
+```lua
+local ship = require("LuaShip")
+
+-- Create a new container machine
+local image = ship.create_machine("alpine:latest")
+
+-- Configure container runtime
+image.provider = "podman"
+
+-- Add build-time commands
+image.add_comptime_command("apk update")
+image.add_comptime_command("apk add --no-cache gcc musl-dev curl")
+
+-- Copy files
+image.copy("source.c", "source.c")
+
+-- Start container with specific configuration
+image.start({
+    flags = {
+        "--memory=200m",
+        "--network=host"
+    },
+    volumes = {
+        { ".", "/output" }
+    },
+    command = "gcc --static source.c -o /output/binary"
+})
+```
 
 ### LuaShip Module
 
@@ -78,36 +110,7 @@ Starts the container with the specified configuration.
   - `volumes`: Array of volume mappings `[["host_path", "container_path"]]`
   - `command`: Command to execute when starting the container
 
-## Example Usage
 
-```lua
-local ship = require("LuaShip")
-
--- Create a new container machine
-local image = ship.create_machine("alpine:latest")
-
--- Configure container runtime
-image.provider = "podman"
-
--- Add build-time commands
-image.add_comptime_command("apk update")
-image.add_comptime_command("apk add --no-cache gcc musl-dev curl")
-
--- Copy files
-image.copy("source.c", "source.c")
-
--- Start container with specific configuration
-image.start({
-    flags = {
-        "--memory=200m",
-        "--network=host"
-    },
-    volumes = {
-        { ".", "/output" }
-    },
-    command = "gcc --static source.c -o /output/binary"
-})
-```
 
 ## Configuration
 
