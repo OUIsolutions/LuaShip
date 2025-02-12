@@ -12,3 +12,7 @@ if os then
     end
 end
 private_lua_ship.error = error
+
+if string then
+    private_lua_ship.string = string
+end 

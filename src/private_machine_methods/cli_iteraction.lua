@@ -42,7 +42,7 @@ private_lua_ship_machine_methods.start        = function(self_obj, props)
     end
     command = command .. name
     if props.command then
-        local formmated = string.gsub(props.command, "'", "'\\''")
+        local formmated  = private_lua_ship.string.gsub(props.command, "'", "'\\''")
         command = command .. " sh -c '" .. formmated.."'"
     end
     local ok = private_lua_ship.os_execute(command)
