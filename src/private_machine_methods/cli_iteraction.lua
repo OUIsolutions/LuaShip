@@ -6,7 +6,7 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
     if not name then
         name = "sha" .. private_lua_ship.sha256(self_obj.docker_file)
     end
-    local filename = name .. ".Dockerfile"
+    local filename = self_obj.cache_folder .. "/" .. name .. ".Dockerfile"
     private_lua_ship_machine_methods.save_to_file(self_obj, filename)
     local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " .  --quiet   "
     local ok = private_lua_ship.os_execute(command)
@@ -42,8 +42,8 @@ private_lua_ship_machine_methods.start        = function(self_obj, props)
     end
     command = command .. name
     if props.command then
-        local formmated  = private_lua_ship.string.gsub(props.command, "'", "'\\''")
-        command = command .. " sh -c '" .. formmated.."'"
+        local formmated = private_lua_ship.string.gsub(props.command, "'", "'\\''")
+        command         = command .. " sh -c '" .. formmated .. "'"
     end
     local ok = private_lua_ship.os_execute(command)
     if not ok then

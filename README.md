@@ -66,7 +66,8 @@ Creates a new container machine instance based on the specified distribution.
 
 ### LuaShipMachine
 #### Properties
-
+##### `cache folder`
+specifies where to cache temporary DockerFiles(defaults to tmp/)
 ##### `provider: "podman" | "docker"`
 Specifies the container runtime to use. Must be either "podman" or "docker".
 
