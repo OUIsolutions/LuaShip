@@ -49,7 +49,9 @@ image.start({
     volumes = {
         { ".", "/output" }
     },
-    command = "gcc --static source.c -o /output/binary"
+    command = {"gcc --static source.c -o /output/binary", 'echo "end"'}
+    -- Or
+    -- command = "echo 'You can also use '\\''comand'\\'' by passing just a string.'"
 })
 ```
 
