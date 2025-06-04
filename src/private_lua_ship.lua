@@ -14,7 +14,10 @@ private_lua_ship.create_machine = function(start_image)
     self_obj.copy                 = function(host_data, machine_dest)
         private_lua_ship_machine_methods.copy(self_obj, host_data, machine_dest)
     end
-
+    self_obj.env                 = function(name, value)
+        private_lua_ship_machine_methods.env(self_obj, name, value)
+    end
+    
     self_obj.save_to_file         = function(filename)
         private_lua_ship_machine_methods.save_to_file(self_obj, filename)
     end
