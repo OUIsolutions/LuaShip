@@ -75,6 +75,7 @@ private_lua_ship_machine_methods.create_start_command        = function(self_obj
 
         command = command .. ' sh -c "' .. formmated .. '"'
     end
+    return command
 end 
 
 
