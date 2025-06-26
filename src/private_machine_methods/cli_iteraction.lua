@@ -8,7 +8,14 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
     end
     local filename = self_obj.cache_folder .. "/" .. name .. ".Dockerfile"
     private_lua_ship_machine_methods.save_to_file(self_obj, filename)
-    local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " .  --quiet   "
+
+    local quiet = ""
+    if self_obj.quiet then
+        quiet = "  --quiet "
+    end
+
+
+    local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " . " .. quiet
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
@@ -16,7 +23,9 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
     private_lua_ship.os_remove(filename)
     return name
 end
-private_lua_ship_machine_methods.start        = function(self_obj, props)
+
+
+private_lua_ship_machine_methods.create_start_command        = function(self_obj, props)
     if not props.rebuild then
         props.rebuild = true
     end
@@ -66,6 +75,15 @@ private_lua_ship_machine_methods.start        = function(self_obj, props)
 
         command = command .. ' sh -c "' .. formmated .. '"'
     end
+end 
+
+
+private_lua_ship_machine_methods.start        = function(self_obj, props)
+    local command = private_lua_ship_machine_methods.create_start_command(self_obj, props)
+    if not command then
+        private_lua_ship.error("unable to create start command")
+    end
+
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
