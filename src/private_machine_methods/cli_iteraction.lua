@@ -2,10 +2,14 @@ private_lua_ship_machine_methods.save_to_file = function(self_obj, filename)
     private_lua_ship.open(filename, "w"):write(self_obj.docker_file):close()
 end
 
-private_lua_ship_machine_methods.build        = function(self_obj, name)
+private_lua_ship_machine_methods.create_name = function ()
     if not name then
-        name = "sha" .. private_lua_ship.sha256(self_obj.docker_file)
+        return "sha" .. private_lua_ship.sha256(self_obj.docker_file)
     end
+    return name
+end
+
+private_lua_ship_machine_methods.build        = function(self_obj, name) 
     local filename = self_obj.cache_folder .. "/" .. name .. ".Dockerfile"
     private_lua_ship_machine_methods.save_to_file(self_obj, filename)
     local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " .  --quiet   "
@@ -14,8 +18,9 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
         private_lua_ship.error("unable to execute command:\n" .. command)
     end
     private_lua_ship.os_remove(filename)
-    return name
 end
+
+
 private_lua_ship_machine_methods.start        = function(self_obj, props)
     if not props.rebuild then
         props.rebuild = true
