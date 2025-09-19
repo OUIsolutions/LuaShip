@@ -24,8 +24,7 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
     return name
 end
 
-
-private_lua_ship_machine_methods.create_start_command        = function(self_obj, props)
+private_lua_ship_machine_methods.create_start_command = function(self_obj, props)
     if not props.rebuild then
         props.rebuild = true
     end
@@ -37,6 +36,12 @@ private_lua_ship_machine_methods.create_start_command        = function(self_obj
         props.flags = {}
     end
     local command = self_obj.provider .. " run "
+    
+    -- Add quiet flag if specified
+    if props.quiet then
+        command = command .. " --quiet "
+    end
+    
     for i = 1, #props.flags do
         local current_flag = props.flags[i]
         command = command .. current_flag .. " "
@@ -76,7 +81,7 @@ private_lua_ship_machine_methods.create_start_command        = function(self_obj
         command = command .. ' sh -c "' .. formmated .. '"'
     end
     return command
-end 
+end
 
 
 private_lua_ship_machine_methods.start        = function(self_obj, props)
@@ -84,7 +89,7 @@ private_lua_ship_machine_methods.start        = function(self_obj, props)
     if not command then
         private_lua_ship.error("unable to create start command")
     end
-
+    print("Executing command:" .. command)
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
