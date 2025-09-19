@@ -16,12 +16,11 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
 
 
     local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " . " .. redirect
-    print("Executing command:" .. command)
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
     end
-    --private_lua_ship.os_remove(filename)
+    private_lua_ship.os_remove(filename)
     return name
 end
 
