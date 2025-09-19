@@ -9,18 +9,19 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
     local filename = self_obj.cache_folder .. "/" .. name .. ".Dockerfile"
     private_lua_ship_machine_methods.save_to_file(self_obj, filename)
 
-    local quiet = ""
+    local redirect = ""
     if self_obj.quiet then
-        quiet = "  --quiet "
+        redirect = " > /dev/null 2>&1 "
     end
 
 
-    local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " . " .. quiet
+    local command = self_obj.provider .. " build -t " .. name .. " -f " .. filename .. " . " .. redirect
+    print("Executing command:" .. command)
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
     end
-    private_lua_ship.os_remove(filename)
+    --private_lua_ship.os_remove(filename)
     return name
 end
 
@@ -37,10 +38,6 @@ private_lua_ship_machine_methods.create_start_command = function(self_obj, props
     end
     local command = self_obj.provider .. " run "
     
-    -- Add quiet flag if specified
-    if props.quiet then
-        command = command .. " --quiet "
-    end
     
     for i = 1, #props.flags do
         local current_flag = props.flags[i]
