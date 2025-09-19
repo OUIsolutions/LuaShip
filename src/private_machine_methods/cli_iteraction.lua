@@ -25,7 +25,7 @@ private_lua_ship_machine_methods.build        = function(self_obj, name)
 end
 
 private_lua_ship_machine_methods.create_start_command = function(self_obj, props)
-    if not props.rebuild then
+    if props.rebuild == nil then
         props.rebuild = true
     end
     local name = props.name
