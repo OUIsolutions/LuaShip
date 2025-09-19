@@ -85,7 +85,6 @@ private_lua_ship_machine_methods.start        = function(self_obj, props)
     if not command then
         private_lua_ship.error("unable to create start command")
     end
-    --print("Executing command:" .. command)
     local ok = private_lua_ship.os_execute(command)
     if not ok then
         private_lua_ship.error("unable to execute command:\n" .. command)
